@@ -14,7 +14,10 @@
 }
 
 html, body {
-  background-color: var(--bg);
+  background:
+    radial-gradient(ellipse at center, rgba(255, 42, 42, 0.075), rgba(255, 42, 42, 0.032) 34%, transparent 68%),
+    var(--bg);
+  background-attachment: scroll;
   color: var(--text);
   margin: 0;
   padding: 0;
@@ -36,8 +39,11 @@ body::before {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.04;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.014) 1px, transparent 1px);
+  background-size: 7px 7px;
+  opacity: 0.22;
 }
 
 a {
@@ -55,14 +61,14 @@ h1, h2, h3, h4, p {
 
 .site-shell::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 5;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at center, rgba(255, 42, 42, 0.085), rgba(255, 42, 42, 0.042) 34%, transparent 72%);
-  filter: blur(20px);
-  opacity: 0.72;
+    radial-gradient(ellipse at 50% 18%, rgba(255, 42, 42, 0.08), transparent 42%),
+    radial-gradient(ellipse at 50% 48%, rgba(255, 42, 42, 0.055), transparent 48%);
+  opacity: 0.76;
 }
 
 /* Utility Classes */
@@ -141,40 +147,6 @@ h1, h2, h3, h4, p {
   background: transparent;
   color: var(--accent);
   box-shadow: 0 18px 58px rgba(255, 42, 42, 0.22), var(--shadow-inset);
-}
-
-/* Floating background orbs */
-.bg-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.3;
-}
-
-.bg-orb-1 {
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, rgba(255, 42, 42, 0.4) 0%, rgba(255, 42, 42, 0) 70%);
-  top: -10%;
-  left: -10%;
-}
-
-.bg-orb-2 {
-  width: 40vw;
-  height: 40vw;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
-  bottom: 10%;
-  right: -5%;
-}
-
-.bg-orb-3 {
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, rgba(255, 42, 42, 0.25) 0%, rgba(255, 42, 42, 0) 70%);
-  top: 40%;
-  left: 20%;
 }
 
 @media (max-width: 760px) {

@@ -43,7 +43,6 @@ const projects = [
 
 export default function Home() {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: containerRef });
 
   const heroRef = useRef(null);
   const { scrollYProgress: heroProgress } = useScroll({
@@ -59,11 +58,6 @@ export default function Home() {
   const heroAvatarY = useTransform(heroSpring, [0, 1], ['0vh', '12vh']);
   const heroAvatarScale = useTransform(heroSpring, [0, 1], [1, 0.9]);
   const heroTitleY = useTransform(heroSpring, [0, 1], ['0vh', '-8vh']);
-
-  // Parallax logic for background orbs
-  const orb1Y = useTransform(scrollYProgress, [0, 1], ['0%', '80%']);
-  const orb2Y = useTransform(scrollYProgress, [0, 1], ['0%', '-60%']);
-  const orb3Y = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
 
   // Refs for specific scroll-animated sections
   const aboutRef = useRef(null);
@@ -87,22 +81,27 @@ export default function Home() {
     target: techRef,
     offset: ["start end", "end start"]
   });
-  const techX = useTransform(techProgress, [0, 1], ['0%', '-50%']);
+  const techSpring = useSpring(techProgress, {
+    stiffness: 80,
+    damping: 26,
+    mass: 0.4
+  });
+  const techX = useTransform(techSpring, [0, 1], ['0%', '-50%']);
 
   const philosophyRef = useRef(null);
   const { scrollYProgress: philosophyProgress } = useScroll({
     target: philosophyRef,
     offset: ["start end", "end start"]
   });
-  const philosophyY = useTransform(philosophyProgress, [0, 1], ['40%', '-40%']);
+  const philosophySpring = useSpring(philosophyProgress, {
+    stiffness: 80,
+    damping: 26,
+    mass: 0.4
+  });
+  const philosophyY = useTransform(philosophySpring, [0, 1], ['40%', '-40%']);
 
   return (
     <main ref={containerRef} className="site-shell" style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
-
-      {/* Background Parallax Orbs */}
-      <motion.div className="bg-orb bg-orb-1" style={{ y: orb1Y }} />
-      <motion.div className="bg-orb bg-orb-2" style={{ y: orb2Y }} />
-      <motion.div className="bg-orb bg-orb-3" style={{ y: orb3Y }} />
 
       {/* 1. HERO SECTION */}
       <section ref={heroRef} style={{ minHeight: '105vh', display: 'flex', alignItems: 'center', padding: '0 5vw', position: 'relative', zIndex: 10, overflow: 'hidden' }}>
@@ -142,7 +141,7 @@ export default function Home() {
             x: heroAvatarX,
             y: heroAvatarY,
             scale: heroAvatarScale,
-            filter: 'drop-shadow(22px 24px 0 rgba(255, 42, 42, 0.1)) drop-shadow(0 30px 72px rgba(0, 0, 0, 0.56))',
+            boxShadow: '24px 26px 0 rgba(255, 42, 42, 0.1)',
             willChange: 'transform',
             transform: 'translateZ(0)',
             backfaceVisibility: 'hidden'
@@ -250,7 +249,7 @@ export default function Home() {
       </section>
 
       {/* 5. EXPERTISE SECTION */}
-      <section style={{ minHeight: '100vh', padding: '15vh 5vw', backgroundColor: 'rgba(5,5,5,0.8)', backdropFilter: 'blur(10px)', position: 'relative', zIndex: 10, borderTop: '1px solid var(--line)' }}>
+      <section style={{ minHeight: '100vh', padding: '15vh 5vw', backgroundColor: 'rgba(5,5,5,0.72)', position: 'relative', zIndex: 10, borderTop: '1px solid var(--line)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}>
         <motion.h3
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -269,9 +268,9 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10%" }}
               transition={{ duration: 0.8, delay: i * 0.2 }}
-              style={{ display: 'grid', gridTemplateColumns: 'minmax(60px, 1fr) 4fr', gap: '2rem', alignItems: 'start', padding: '0 0 8vh', borderBottom: '1px solid rgba(255,255,255,0.03)', filter: 'drop-shadow(0 18px 34px rgba(0, 0, 0, 0.32))' }}
+              style={{ display: 'grid', gridTemplateColumns: 'minmax(60px, 1fr) 4fr', gap: '2rem', alignItems: 'start', padding: '0 0 8vh', borderBottom: '1px solid rgba(255,255,255,0.03)', textShadow: '0 12px 28px rgba(0, 0, 0, 0.28)' }}
             >
-              <div style={{ color: 'var(--accent)', filter: 'drop-shadow(0 12px 28px rgba(255, 42, 42, 0.24))' }}><item.icon size={54} strokeWidth={1.5} /></div>
+              <div style={{ color: 'var(--accent)' }}><item.icon size={54} strokeWidth={1.5} /></div>
               <div>
                 <h4 style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', marginBottom: '1.5rem', fontWeight: 600, letterSpacing: '-0.02em' }}>{item.title}</h4>
                 <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.4rem)', color: 'var(--muted)', lineHeight: 1.6, maxWidth: '800px' }}>{item.desc}</p>
