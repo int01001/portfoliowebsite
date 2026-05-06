@@ -4,6 +4,9 @@
   --muted: #a1a1aa;
   --accent: #ff2a2a;
   --line: rgba(255, 255, 255, 0.08);
+  --shadow-soft: 0 18px 55px rgba(0, 0, 0, 0.34);
+  --shadow-red: 0 18px 60px rgba(255, 42, 42, 0.16);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -46,6 +49,22 @@ h1, h2, h3, h4, p {
   margin: 0;
 }
 
+.site-shell {
+  isolation: isolate;
+}
+
+.site-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 42, 42, 0.085), rgba(255, 42, 42, 0.042) 34%, transparent 72%);
+  filter: blur(20px);
+  opacity: 0.72;
+}
+
 /* Utility Classes */
 .text-accent {
   color: var(--accent);
@@ -74,6 +93,7 @@ h1, h2, h3, h4, p {
   line-height: 0.95;
   text-transform: uppercase;
   white-space: nowrap;
+  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
   will-change: transform;
 }
 
@@ -99,6 +119,7 @@ h1, h2, h3, h4, p {
   transition: all 0.3s ease;
   background: transparent;
   color: var(--text);
+  box-shadow: var(--shadow-soft), var(--shadow-inset);
   cursor: pointer;
 }
 
@@ -106,17 +127,20 @@ h1, h2, h3, h4, p {
   background: var(--text);
   color: var(--bg);
   border-color: var(--text);
+  box-shadow: 0 22px 65px rgba(255, 255, 255, 0.16), var(--shadow-inset);
 }
 
 .btn-accent {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--text);
+  box-shadow: var(--shadow-red), var(--shadow-inset);
 }
 
 .btn-accent:hover {
   background: transparent;
   color: var(--accent);
+  box-shadow: 0 18px 58px rgba(255, 42, 42, 0.22), var(--shadow-inset);
 }
 
 /* Floating background orbs */
@@ -151,4 +175,10 @@ h1, h2, h3, h4, p {
   background: radial-gradient(circle, rgba(255, 42, 42, 0.25) 0%, rgba(255, 42, 42, 0) 70%);
   top: 40%;
   left: 20%;
+}
+
+@media (max-width: 760px) {
+  .site-shell::before {
+    opacity: 0.58;
+  }
 }

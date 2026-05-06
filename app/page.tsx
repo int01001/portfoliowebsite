@@ -13,15 +13,19 @@ const links = {
 };
 
 const timeline = [
-  { year: "2022", title: "Algorithmic Foundations", desc: "Engineered a high-performance C-Sort Web Engine demonstrating core computing efficiency within full-stack environments." },
-  { year: "2023", title: "Architectural Scaling", desc: "Built end-to-end scalable architectures including a Netflix Clone with robust database implementations and a Spotify Clone handling extensive media delivery." },
-  { year: "2024", title: "Intelligent Systems", desc: "Pivoted towards integrating AI/ML models into user-facing products and mastering advanced video motion graphics." }
+  { year: "2021", title: "Creative Foundations", desc: "Started shaping a visual-first mindset through editing, pacing, layout, and digital storytelling. This is where the creative side of my work began to connect with technology." },
+  { year: "2022", title: "Algorithmic Foundations", desc: "Built a stronger base in C and C++ while exploring efficient logic, problem solving, and data handling through projects like the C-Sort Web Engine." },
+  { year: "2023", title: "Full-Stack Builds", desc: "Moved into complete web products with React, Next.js, Node.js, and databases. Built clone architectures and backend flows that helped me understand how real apps are structured." },
+  { year: "2024", title: "Motion, Editing & Product Feel", desc: "Focused on making digital work feel polished: sharper interfaces, better motion, cleaner transitions, and stronger video edits with Premiere Pro, After Effects, Lightroom, and Photoshop." },
+  { year: "2025", title: "AI & Intelligent Systems", desc: "Started integrating AI/ML thinking into projects, experimenting with Python, PyTorch, automation, and smarter user-facing tools that blend creativity with logic." },
+  { year: "2026", title: "Robotics & Applied Engineering", desc: "Expanded toward robotics and practical systems, combining software, control logic, and product thinking to build work that is more interactive, physical, and intelligent." }
 ];
 
 const skills = [
   "Next.js", "React", "TypeScript", "Node.js", "Python",
   "PyTorch", "PostgreSQL", "Premiere Pro", "After Effects",
-  "Framer Motion", "Tailwind CSS", "C / C++", "AWS", "Figma"
+  "Lightroom", "Photoshop", "Robotics", "Framer Motion",
+  "Tailwind CSS", "C / C++", "AWS", "Figma"
 ];
 
 const expertise = [
@@ -40,6 +44,21 @@ const projects = [
 export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
+
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  const heroSpring = useSpring(heroProgress, {
+    stiffness: 72,
+    damping: 24,
+    mass: 0.45
+  });
+  const heroAvatarX = useTransform(heroSpring, [0, 1], ['0vw', '-12vw']);
+  const heroAvatarY = useTransform(heroSpring, [0, 1], ['0vh', '12vh']);
+  const heroAvatarScale = useTransform(heroSpring, [0, 1], [1, 0.9]);
+  const heroTitleY = useTransform(heroSpring, [0, 1], ['0vh', '-8vh']);
 
   // Parallax logic for background orbs
   const orb1Y = useTransform(scrollYProgress, [0, 1], ['0%', '80%']);
@@ -78,7 +97,7 @@ export default function Home() {
   const philosophyY = useTransform(philosophyProgress, [0, 1], ['40%', '-40%']);
 
   return (
-    <main ref={containerRef} style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
+    <main ref={containerRef} className="site-shell" style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
 
       {/* Background Parallax Orbs */}
       <motion.div className="bg-orb bg-orb-1" style={{ y: orb1Y }} />
@@ -86,46 +105,62 @@ export default function Home() {
       <motion.div className="bg-orb bg-orb-3" style={{ y: orb3Y }} />
 
       {/* 1. HERO SECTION */}
-      <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 5vw', position: 'relative', zIndex: 10, flexWrap: 'wrap-reverse', gap: '4rem' }}>
-        <div style={{ flex: '1 1 50%', minWidth: '300px' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h1 style={{
-              fontSize: 'clamp(4rem, 14vw, 12rem)',
-              fontWeight: 800,
-              lineHeight: 0.85,
-              textTransform: 'uppercase',
-              letterSpacing: '-0.04em'
-            }}>
-              Piyush<br />
-              <span className="text-stroke">Kumar</span>
-            </h1>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.5, delay: 0.8 }}
-            style={{ marginTop: '6vh', display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}
-          >
-            <p style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', color: 'var(--text)', maxWidth: '600px', lineHeight: 1.5, textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
-              Creative Developer & Editor. I shape digital experiences through code, motion, and intelligent systems.
-            </p>
-            <a href="#work" className="btn btn-accent">Explore Work</a>
-          </motion.div>
-        </div>
+      <section ref={heroRef} style={{ minHeight: '105vh', display: 'flex', alignItems: 'center', padding: '0 5vw', position: 'relative', zIndex: 10, overflow: 'hidden' }}>
+        <motion.h1
+          initial={{ opacity: 0, y: 80 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            position: 'absolute',
+            left: '3vw',
+            top: '7vh',
+            zIndex: 1,
+            fontSize: 'clamp(5.8rem, 18vw, 17rem)',
+            fontWeight: 900,
+            lineHeight: 0.78,
+            textTransform: 'uppercase',
+            letterSpacing: '-0.04em',
+            y: heroTitleY,
+            textShadow: '0 26px 80px rgba(0, 0, 0, 0.65), 0 18px 90px rgba(255, 42, 42, 0.14)'
+          }}
+        >
+          Piyush<br />
+          <span className="text-stroke">Kumar</span>
+        </motion.h1>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+          initial={{ opacity: 0, scale: 0.86, rotate: -4 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
-          style={{ flex: '1 1 30%', display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: '250px' }}
+          transition={{ duration: 1.15, ease: "easeOut", delay: 0.25 }}
+          style={{
+            position: 'absolute',
+            left: '-5vw',
+            bottom: '-10vh',
+            zIndex: 3,
+            width: 'clamp(430px, 58vw, 980px)',
+            aspectRatio: '1/1',
+            x: heroAvatarX,
+            y: heroAvatarY,
+            scale: heroAvatarScale,
+            filter: 'drop-shadow(22px 24px 0 rgba(255, 42, 42, 0.1)) drop-shadow(0 30px 72px rgba(0, 0, 0, 0.56))',
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden'
+          }}
         >
-          <div style={{ position: 'relative', width: 'clamp(200px, 25vw, 400px)', aspectRatio: '1/1', border: '4px solid var(--accent)', overflow: 'hidden', boxShadow: '20px 20px 0px rgba(255, 42, 42, 0.2)' }}>
-            <img src="/avatar.png" alt="Pixel Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', imageRendering: 'pixelated', filter: 'contrast(1.2)' }} />
-          </div>
+          <img src="/avatar-transparent.png" alt="Pixel Avatar" style={{ width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated', filter: 'contrast(1.16) saturate(1.08)', transform: 'translateZ(0)', willChange: 'transform' }} />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 36 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.8 }}
+          style={{ position: 'absolute', right: '5vw', bottom: '10vh', zIndex: 4, display: 'flex', gap: '2rem', alignItems: 'center', justifyContent: 'flex-end', flexWrap: 'wrap', maxWidth: '620px', textAlign: 'right' }}
+        >
+          <p style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', color: 'var(--text)', maxWidth: '520px', lineHeight: 1.5, textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
+            Creative Developer & Editor. I shape digital experiences through code, motion, and intelligent systems.
+          </p>
+          <a href="#work" className="btn btn-accent">Explore Work</a>
         </motion.div>
       </section>
 
@@ -149,7 +184,7 @@ export default function Home() {
       </section>
 
       {/* 3. NEW PARALLAX PHILOSOPHY SECTION */}
-      <section ref={philosophyRef} style={{ position: 'relative', minHeight: '150vh', backgroundColor: '#000', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10 }}>
+      <section ref={philosophyRef} style={{ position: 'relative', minHeight: '150vh', background: 'rgba(0, 0, 0, 0.18)', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10 }}>
         <motion.div
           style={{
             position: 'absolute',
@@ -170,7 +205,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-20%" }}
             transition={{ duration: 1 }}
-            style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.4, fontWeight: 600 }}
+            style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.4, fontWeight: 600, textShadow: '0 20px 55px rgba(0, 0, 0, 0.56)' }}
           >
             I don't just write code. I build digital <span className="text-accent">experiences</span>.
             <br /><br />
@@ -180,7 +215,7 @@ export default function Home() {
       </section>
 
       {/* 4. NEW JOURNEY / TIMELINE SECTION */}
-      <section style={{ minHeight: '100vh', padding: '20vh 5vw', position: 'relative', zIndex: 10 }}>
+      <section style={{ minHeight: '145vh', padding: '22vh 5vw', position: 'relative', zIndex: 10 }}>
         <motion.h3
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -190,7 +225,7 @@ export default function Home() {
         >
           The Journey
         </motion.h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10vh', position: 'relative' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12vh', position: 'relative' }}>
           {/* Timeline Line */}
           <div style={{ position: 'absolute', left: '15px', top: 0, bottom: 0, width: '2px', background: 'var(--line)', zIndex: -1 }}></div>
 
@@ -203,11 +238,11 @@ export default function Home() {
               transition={{ duration: 0.8, delay: i * 0.2 }}
               style={{ display: 'flex', gap: '3vw', alignItems: 'flex-start' }}
             >
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg)', border: '4px solid var(--accent)', flexShrink: 0, marginTop: '5px' }}></div>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg)', border: '4px solid var(--accent)', flexShrink: 0, marginTop: '5px', boxShadow: '0 0 0 8px rgba(255, 42, 42, 0.08), 0 18px 42px rgba(255, 42, 42, 0.22)' }}></div>
               <div>
                 <h4 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 800, color: 'var(--accent)', marginBottom: '1rem', lineHeight: 1 }}>{item.year}</h4>
                 <h5 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 600, marginBottom: '1.5rem' }}>{item.title}</h5>
-                <p style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)', color: 'var(--muted)', maxWidth: '700px', lineHeight: 1.6 }}>{item.desc}</p>
+                <p style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)', color: 'var(--muted)', maxWidth: '850px', lineHeight: 1.7 }}>{item.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -234,9 +269,9 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10%" }}
               transition={{ duration: 0.8, delay: i * 0.2 }}
-              style={{ display: 'grid', gridTemplateColumns: 'minmax(60px, 1fr) 4fr', gap: '2rem', alignItems: 'start', paddingBottom: '8vh', borderBottom: '1px solid rgba(255,255,255,0.03)' }}
+              style={{ display: 'grid', gridTemplateColumns: 'minmax(60px, 1fr) 4fr', gap: '2rem', alignItems: 'start', padding: '0 0 8vh', borderBottom: '1px solid rgba(255,255,255,0.03)', filter: 'drop-shadow(0 18px 34px rgba(0, 0, 0, 0.32))' }}
             >
-              <div style={{ color: 'var(--accent)' }}><item.icon size={54} strokeWidth={1.5} /></div>
+              <div style={{ color: 'var(--accent)', filter: 'drop-shadow(0 12px 28px rgba(255, 42, 42, 0.24))' }}><item.icon size={54} strokeWidth={1.5} /></div>
               <div>
                 <h4 style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', marginBottom: '1.5rem', fontWeight: 600, letterSpacing: '-0.02em' }}>{item.title}</h4>
                 <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.4rem)', color: 'var(--muted)', lineHeight: 1.6, maxWidth: '800px' }}>{item.desc}</p>
@@ -257,7 +292,7 @@ export default function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
-              style={{ padding: '1.5rem 2.5rem', border: '1px solid var(--line)', borderRadius: '100px', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)', fontWeight: 600, backgroundColor: 'rgba(255,255,255,0.02)' }}
+              style={{ padding: '1.5rem 2.5rem', border: '1px solid var(--line)', borderRadius: '100px', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)', fontWeight: 600, backgroundColor: 'rgba(255,255,255,0.035)', boxShadow: '0 16px 46px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08)' }}
             >
               {skill}
             </motion.div>
@@ -314,10 +349,17 @@ export default function Home() {
                 borderBottom: '1px solid var(--line)',
                 textDecoration: 'none',
                 color: 'var(--text)',
-                transition: 'color 0.3s ease'
+                transition: 'color 0.3s ease, text-shadow 0.3s ease',
+                textShadow: '0 16px 38px rgba(0, 0, 0, 0.35)'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent)'}
-              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text)'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--accent)';
+                e.currentTarget.style.textShadow = '0 18px 46px rgba(255, 42, 42, 0.22)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--text)';
+                e.currentTarget.style.textShadow = '0 16px 38px rgba(0, 0, 0, 0.35)';
+              }}
             >
               <span style={{ fontSize: 'clamp(1.5rem, 4.5vw, 3.5rem)', fontWeight: 500, letterSpacing: '-0.02em' }}>{work.title}</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: 'clamp(0.8rem, 1.5vw, 1.25rem)', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
@@ -335,7 +377,7 @@ export default function Home() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          style={{ fontSize: 'clamp(3rem, 12vw, 10rem)', fontWeight: 800, textAlign: 'center', textTransform: 'uppercase', letterSpacing: '-0.05em' }}
+          style={{ fontSize: 'clamp(3rem, 12vw, 10rem)', fontWeight: 800, textAlign: 'center', textTransform: 'uppercase', letterSpacing: '-0.05em', textShadow: '0 26px 80px rgba(0, 0, 0, 0.65), 0 18px 80px rgba(255, 42, 42, 0.12)' }}
         >
           Let's Talk
         </motion.h2>
