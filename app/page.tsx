@@ -100,6 +100,29 @@ export default function Home() {
   });
   const philosophyY = useTransform(philosophySpring, [0, 1], ['40%', '-40%']);
 
+  const journeyRef = useRef(null);
+  const { scrollYProgress: journeyProgress } = useScroll({ target: journeyRef, offset: ["start end", "end start"] });
+  const journeySpring = useSpring(journeyProgress, { stiffness: 80, damping: 26, mass: 0.4 });
+  const journeyY1 = useTransform(journeySpring, [0, 1], ['80%', '-80%']);
+  const journeyY2 = useTransform(journeySpring, [0, 1], ['-80%', '80%']);
+
+  const arsenalRef = useRef(null);
+  const { scrollYProgress: arsenalProgress } = useScroll({ target: arsenalRef, offset: ["start end", "end start"] });
+  const arsenalSpring = useSpring(arsenalProgress, { stiffness: 80, damping: 26, mass: 0.4 });
+  const arsenalY1 = useTransform(arsenalSpring, [0, 1], ['80%', '-80%']);
+  const arsenalY2 = useTransform(arsenalSpring, [0, 1], ['-80%', '80%']);
+
+  const skillsRef = useRef(null);
+  const { scrollYProgress: skillsProgress } = useScroll({ target: skillsRef, offset: ["start end", "end start"] });
+  const skillsSpring = useSpring(skillsProgress, { stiffness: 80, damping: 26, mass: 0.4 });
+  const skillsY1 = useTransform(skillsSpring, [0, 1], ['80%', '-80%']);
+  const skillsY2 = useTransform(skillsSpring, [0, 1], ['-80%', '80%']);
+
+  const workRef = useRef(null);
+  const { scrollYProgress: workProgress } = useScroll({ target: workRef, offset: ["start end", "end start"] });
+  const workSpring = useSpring(workProgress, { stiffness: 80, damping: 26, mass: 0.4 });
+  const workY1 = useTransform(workSpring, [0, 1], ['80%', '-80%']);
+  const workY2 = useTransform(workSpring, [0, 1], ['-80%', '80%']);
   return (
     <main ref={containerRef} className="site-shell" style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
 
@@ -141,7 +164,6 @@ export default function Home() {
             x: heroAvatarX,
             y: heroAvatarY,
             scale: heroAvatarScale,
-            boxShadow: '24px 26px 0 rgba(255, 42, 42, 0.1)',
             willChange: 'transform',
             transform: 'translateZ(0)',
             backfaceVisibility: 'hidden'
@@ -214,12 +236,14 @@ export default function Home() {
       </section>
 
       {/* 4. NEW JOURNEY / TIMELINE SECTION */}
-      <section style={{ minHeight: '145vh', padding: '22vh 5vw', position: 'relative', zIndex: 10 }}>
+      <section ref={journeyRef} style={{ minHeight: '145vh', padding: '22vh 5vw', position: 'relative', zIndex: 10, overflow: 'hidden' }}>
+        <motion.div style={{ position: 'absolute', top: '5%', right: '-5%', fontSize: 'clamp(6rem, 18vw, 22rem)', fontWeight: 900, color: 'rgba(255, 255, 255, 0.03)', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: -1, userSelect: 'none', y: journeyY1 }}>NARRATIVE</motion.div>
+        <motion.div style={{ position: 'absolute', bottom: '5%', left: '-10%', fontSize: 'clamp(6rem, 20vw, 25rem)', fontWeight: 900, color: 'rgba(255, 255, 255, 0.02)', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: -1, userSelect: 'none', y: journeyY2 }}>ALGORITHM</motion.div>
         <motion.h3
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
           style={{ fontSize: 'clamp(2rem, 6vw, 5rem)', marginBottom: '15vh', borderBottom: '1px solid var(--line)', paddingBottom: '3vh' }}
         >
           The Journey
@@ -234,7 +258,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.8, delay: i * 0.2 }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
               style={{ display: 'flex', gap: '3vw', alignItems: 'flex-start' }}
             >
               <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg)', border: '4px solid var(--accent)', flexShrink: 0, marginTop: '5px', boxShadow: '0 0 0 8px rgba(255, 42, 42, 0.08), 0 18px 42px rgba(255, 42, 42, 0.22)' }}></div>
@@ -249,7 +273,9 @@ export default function Home() {
       </section>
 
       {/* 5. EXPERTISE SECTION */}
-      <section style={{ minHeight: '100vh', padding: '15vh 5vw', backgroundColor: 'rgba(5,5,5,0.72)', position: 'relative', zIndex: 10, borderTop: '1px solid var(--line)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+      <section ref={arsenalRef} style={{ minHeight: '100vh', padding: '15vh 5vw', position: 'relative', zIndex: 10, overflow: 'hidden', borderTop: '1px solid var(--line)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+        <motion.div style={{ position: 'absolute', top: '5%', right: '-5%', fontSize: 'clamp(6rem, 18vw, 22rem)', fontWeight: 900, color: 'rgba(255, 255, 255, 0.02)', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: -1, userSelect: 'none', y: arsenalY1 }}>LOGIC</motion.div>
+        <motion.div style={{ position: 'absolute', bottom: '5%', left: '-5%', fontSize: 'clamp(6rem, 22vw, 26rem)', fontWeight: 900, color: 'rgba(255, 255, 255, 0.03)', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: -1, userSelect: 'none', y: arsenalY2 }}>SYNTAX</motion.div>
         <motion.h3
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -281,7 +307,9 @@ export default function Home() {
       </section>
 
       {/* 6. SKILL MATRIX GRID SECTION */}
-      <section style={{ padding: '15vh 5vw', position: 'relative', zIndex: 10 }}>
+      <section ref={skillsRef} style={{ padding: '15vh 5vw', position: 'relative', zIndex: 10, overflow: 'hidden' }}>
+        <motion.div style={{ position: 'absolute', top: '5%', left: '-5%', fontSize: 'clamp(6rem, 20vw, 24rem)', fontWeight: 900, color: 'rgba(255, 255, 255, 0.025)', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: -1, userSelect: 'none', y: skillsY1 }}>MOTION</motion.div>
+        <motion.div style={{ position: 'absolute', bottom: '5%', right: '-5%', fontSize: 'clamp(6rem, 22vw, 26rem)', fontWeight: 900, color: 'rgba(255, 255, 255, 0.02)', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: -1, userSelect: 'none', y: skillsY2 }}>RENDER</motion.div>
         <h3 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', marginBottom: '5vh', fontWeight: 500, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '2px' }}>Skill Matrix</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
           {skills.map((skill, i) => (
@@ -319,7 +347,9 @@ export default function Home() {
       </section>
 
       {/* 8. WORK SECTION */}
-      <section id="work" style={{ minHeight: '100vh', padding: '15vh 5vw', position: 'relative', zIndex: 10 }}>
+      <section ref={workRef} id="work" style={{ minHeight: '100vh', padding: '15vh 5vw', position: 'relative', zIndex: 10, overflow: 'hidden' }}>
+        <motion.div style={{ position: 'absolute', top: '5%', right: '0%', fontSize: 'clamp(6rem, 18vw, 22rem)', fontWeight: 900, color: 'rgba(255, 255, 255, 0.02)', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: -1, userSelect: 'none', y: workY1 }}>FRAME</motion.div>
+        <motion.div style={{ position: 'absolute', bottom: '5%', left: '-5%', fontSize: 'clamp(6rem, 22vw, 26rem)', fontWeight: 900, color: 'rgba(255, 255, 255, 0.025)', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: -1, userSelect: 'none', y: workY2 }}>EXECUTION</motion.div>
         <motion.h3
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -370,7 +400,7 @@ export default function Home() {
       </section>
 
       {/* 9. FOOTER */}
-      <section style={{ padding: '15vh 5vw 5vh', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6vh', backgroundColor: '#020202', position: 'relative', zIndex: 10 }}>
+      <section style={{ padding: '15vh 5vw 5vh', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6vh', position: 'relative', zIndex: 10 }}>
         <motion.h2
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
